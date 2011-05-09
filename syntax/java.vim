@@ -49,9 +49,12 @@ JavaHiLink javaComment2String javaString
 JavaHiLink javaCommentCharacter javaCharacter
 
 syntax case ignore
-syntax include @javaHtml <sfile>:p:h/xml.vim
-unlet b:current_syntax
-syn region  javaDocComment    start="/\*\*"  end="\*/" keepend contains=javaCommentTitle,@javaHtml,javaDocTags,javaTodo,@Spell
+" syntax include @javaHtml <sfile>:p:h/xml.vim
+if exists("b:current_syntax")
+	unlet b:current_syntax
+endif
+
+syn region  javaDocComment    start="/\*\*"  end="\*/" keepend fold contains=javaCommentTitle,@javaHtml,javaDocTags,javaTodo,@Spell
 syn region  javaCommentTitle  contained matchgroup=javaDocComment start="/\*\*"   matchgroup=javaCommentTitle keepend end="\.$" end="\.[ \t\r<&]"me=e-1 end="[^{]@"me=s-2,he=s-1 end="\*/"me=s-1,he=s-1 contains=@javaHtml,javaCommentStar,javaTodo,@Spell,javaDocTags
 
 syn region javaDocTags  contained start="{@\(link\|linkplain\|inherit[Dd]oc\|doc[rR]oot\|value\)" end="}"
@@ -85,7 +88,9 @@ endif
 exec "syn sync ccomment javaComment minlines=" . java_minlines
 
 "" Fold method definitions
-syn region javaFuncDef start="^\z(\s*\)\(\(public\|protected\|private\|static\|abstract\|final\|native\|synchronized\)[ \n]\+\)*\(void\|boolean\|char\|byte\|short\|int\|long\|float\|double\|\([A-Z][A-Za-z0-9_]*\)\)[ \n]\+[a-z][A-Za-z0-9_]*[ \n]*(\_[^)]*)[ \n]*\(\<throws\>[ \n]\+[A-Z]\w\+\([ \n]*,[ \n]*[A-Z]\w\+\)*[ \n]*\)\?{" end="^\z1}$" keepend transparent fold
+syn region javaFuncDef start="^\z(\s*\)\(\(public\|protected\|private\|static\|abstract\|final\|native\|synchronized\)[ \n]\+\)*\(void\|boolean\|char\|byte\|short\|int\|long\|float\|double\|\([A-Z][A-Za-z0-9_]*\)\)[ \n]\+[a-z][A-Za-z0-9_]*[ \n]*(\_[^)]*)[ \n]*\t*\(\<throws\>[ \n]\+[A-Z]\w\+\([ \n]*,[ \n]*[A-Z]\w\+\)*[ \n]*\)\?{" end="^\z1}$" keepend transparent fold
+
+syn region javaConstrDef start="^\z(\s*\)\(\(public\|protected\|private\|abstract\|final\|synchronized\)[ \n]\+\)*[A-Za-z0-9_]*[ \n]*(\_[^)]*)[ \n]*\t*\(\<throws\>[ \n]\+[A-Z]\w\+\([ \n]*,[ \n]*[A-Z]\w\+\)*[ \n]*\)\?{" end="^\z1}$" keepend transparent fold
 
 "" Uncomment this if you want to fold all {}
 "syn region javaFuncDef start="^\z(\s*\){" end="^\z1}" keepend transparent fold
