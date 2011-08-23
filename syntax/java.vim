@@ -92,6 +92,8 @@ syn region javaFuncDef start="^\z(\s*\)\(\(public\|protected\|private\|static\|a
 
 syn region javaConstrDef start="^\z(\s*\)\(\(public\|protected\|private\|abstract\|final\|synchronized\)[ \n]\+\)*[A-Za-z0-9_]*[ \n]*(\_[^)]*)[ \n]*\t*\(\<throws\>[ \n]\+[A-Z]\w\+\([ \n]*,[ \n]*[A-Z]\w\+\)*[ \n]*\)\?{" end="^\z1}$" keepend transparent fold
 
+syn region javaBlockConstructs start="^\z(\s*\)\(if\|try\|switch\)\s*\((.*)\)\?\s*{" skip="else\|catch" end="^\z1}$" keepend extend transparent fold
+
 "" Uncomment this if you want to fold all {}
 "syn region javaFuncDef start="^\z(\s*\){" end="^\z1}" keepend transparent fold
 
